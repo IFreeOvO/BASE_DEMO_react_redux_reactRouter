@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>组件和props</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script
+      src="https://unpkg.com/react@16/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <!-- 解决jsx编译问题 -->
+
+    <script type="text/babel">
+    // 第一种创建组件的方法
+      function Welcome(props) {
+        return <h1>
+          hello, {props.name}
+        </h1>
+      }
+
+      // 第二种创建组件的方法
+      class Say extends React.Component {
+        render() {
+          const { ctx } = this.props
+          return <button>{ctx}</button>  
+        }
+      }
+
+      const ele = (
+        <div>
+          <h1>练习</h1>
+          <span>{Welcome({name: '哈哈'})}</span>
+          <div><Welcome name="这样也能显示哦"/></div> 
+          <Say ctx="说什么"/>
+        </div>
+      )
+
+      ReactDOM.render(ele, document.getElementById('app'))
+    </script>
+  </body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>更新渲染元素</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script
+      src="https://unpkg.com/react@16/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <!-- 解决jsx编译问题 -->
+
+    <script type="text/babel">
+      function Clock(props) {
+        console.log(props)
+        const ele = (
+          <div>
+            <h1>练习</h1>
+            <span>{props.time.toLocaleTimeString()}</span>
+          </div>
+        )
+        return ele
+      }
+
+      class Clock2 extends React.Component {
+        constructor(props) {
+          super(props)
+          console.log(props)
+
+          this.state = {
+            time: new Date(),
+            ctx: '真的'
+          }
+          console.log('构造只执行一次')
+        }
+
+        updateView() {
+          // 尽可能让多个setstate合并为一个调用
+
+          // state和props可能是异步的, 如果要一起用，需要使用(preState,props)=> {}
+          console.log('更新')
+          this.setState((preState, props) => {
+            // console.log('旧数据',preState)
+            return {
+              time: new Date(),
+              ctx: preState.ctx + props.job
+            }
+          })
+
+          // this.setState({
+          //   time: new Date()
+          // })
+
+          // this.setState({
+          //   a: this.state.a + 1
+          // })
+        }
+
+        componentWillUnmount() {
+          console.log('组件将要卸载')
+          clearInterval(this.timer)
+        }
+
+        componentDidMount() {
+          console.log('组件挂载完毕')
+          this.timer = setInterval(() => {
+            this.updateView()
+          }, 1000)
+        }
+
+        render() {
+          console.log('渲染')
+          // const { time } = this.props
+          const { time, ctx } = this.state
+          return (
+            <div>
+              <h1>练习2</h1>
+              <span>{time.toLocaleTimeString()}</span>
+              <div>{ctx}</div>
+            </div>
+          )
+        }
+      }
+
+      function updata() {
+        ReactDOM.render(
+          <Clock2 time={new Date()} job="无聊" />,
+          document.getElementById('app')
+        )
+      }
+
+      updata()
+
+      // setInterval(() => {
+      //   updata()
+      // }, 1000)
+    </script>
+  </body>
+</html>
