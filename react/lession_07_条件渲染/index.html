@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>条件渲染</title>
+  </head>
+
+  <body>
+    <div id="app"></div>
+
+    <script
+      src="https://unpkg.com/react@16/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <!-- 解决jsx编译问题 -->
+
+    <script type="text/babel">
+      const time = new Date().toLocaleTimeString()
+
+      // react里阻止默认行为只能用preventDefault
+      function jump(e) {
+        console.log('阻止跳转')
+        e.preventDefault()
+        // return false
+      }
+
+      function User() {
+        return <h1>欢迎</h1>
+      }
+
+      function Guest() {
+        return <h1>请注册</h1>
+      }
+
+      function Greeting(props) {
+        const isLog = props.isLog
+        if (isLog) {
+          return <User />
+        } else {
+          return <Guest />
+        }
+      }
+
+      function LoginBotton(props) {
+        return <button onClick={props.onClick}>Login</button>
+      }
+
+      function LogoutBotton(props) {
+        return <button onClick={props.onClick}>Logout</button>
+      }
+
+      const messages = ['React', 'Re: React', 'Re:Re: React']
+      function Mailbox(props) {
+        console.log(props)
+        const unreadMessages = props.unreadMessages
+        return (
+          <div>
+            <h1>Hello!</h1>
+            {unreadMessages.length > 0 && (
+              <h2>You have {unreadMessages.length} unread messages.</h2>
+            )}
+          </div>
+        )
+      }
+      
+
+      class Toggle extends React.Component {
+        constructor(props) {
+          super(props)
+
+          this.state = {
+            isToggle: true
+          }
+        }
+
+        handleClick(title, e) {
+          console.log(title)
+          this.setState(preState => ({
+            isToggle: !preState.isToggle
+          }))
+        }
+
+        render() {
+          console.log('渲染')
+          let button = null
+          if (this.state.isToggle) {
+            button = (
+              <LoginBotton onClick={this.handleClick.bind(this, '登录11')} />
+            )
+          } else {
+            button = (
+              <LogoutBotton onClick={this.handleClick.bind(this, '登出11')} />
+            )
+          }
+
+          return (
+            <div>
+              <button onClick={this.handleClick.bind(this, '传参啊')}>
+                {this.state.isToggle ? '打开' : '关闭'}
+              </button>
+              <Greeting isLog={this.state.isToggle} />
+
+              <div>{button}</div>
+              <Mailbox unreadMessages={messages}/>
+            </div>
+          )
+        }
+      }
+
+      function App() {
+        return (
+          <div>
+            <h1>练习</h1>
+            <span>{time}</span>
+            <a href="#" onClick={jump}>
+              阻止跳转
+            </a>
+            <Toggle />
+          </div>
+        )
+      }
+
+      ReactDOM.render(<App />, document.getElementById('app'))
+    </script>
+  </body>
+</html>

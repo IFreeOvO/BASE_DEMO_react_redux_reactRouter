@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>列表渲染</title>
+  </head>
+
+  <body>
+    <div id="app"></div>
+
+    <script
+      src="https://unpkg.com/react@16/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <!-- 解决jsx编译问题 -->
+
+    <script type="text/babel">
+      const number = [1,2,3,4]
+
+      const double = number.map(item => item*2)
+      console.log(double)
+
+
+      function Ui(props) {
+        const ui = props.double.map((item,index) => <li key={index} id={index}>{item}</li>)
+
+        return (
+          <ul>
+            *{ui}*
+          </ul>
+        )
+      }
+
+
+      
+
+      function App() {
+        return (
+          <div>
+            <h1>练习</h1>
+            <Ui double={double}/>
+          </div>
+        )
+      }
+
+      ReactDOM.render(<App />, document.getElementById('app'))
+    </script>
+  </body>
+</html>

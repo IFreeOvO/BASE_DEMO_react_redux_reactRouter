@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>表单渲染</title>
+  </head>
+
+  <body>
+    <div id="app"></div>
+
+    <script
+      src="https://unpkg.com/react@16/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <!-- 解决jsx编译问题 -->
+
+    <script type="text/babel">
+      class Select extends React.Component {
+        constructor(props) {
+          super(props)
+          this.state = {
+            sex: 'b'
+          }
+        }
+
+        sel(e) {
+          console.log(e.target.value)
+          this.setState({
+            sex: e.target.value
+          })
+
+          console.log(this.props)
+          if(this.props.onChange && (typeof (this.props.onChange) === 'function')) {
+            console.log('父组件收到')
+            this.props.onChange(e.target.value)
+          }
+        }
+
+        render() {
+          const list = [
+            {
+              value: 'a',
+              ctx: '男'
+            },
+            {
+              value: 'b',
+              ctx: '女'
+            },
+            {
+              value: 'c',
+              ctx: '药'
+            }
+          ]
+
+          return (
+            <select value={this.state.sex} onChange={this.sel.bind(this)}>
+              {list.map((item, index) => (
+                <option value={item.value} key={index}>
+                  {item.ctx}
+                </option>
+              ))}
+            </select>
+          )
+        }
+      }
+
+      class Form extends React.Component {
+        constructor(props) {
+          super(props)
+          this.state = {
+            sex: 'b'
+          }
+        }
+
+
+        handleSubmit(e) {
+          console.log('提交', this.state)
+          e.preventDefault()
+        }
+
+        sel(ctx) {
+          console.log('收到',ctx)
+          this.setState({
+            sex: ctx
+          })
+        }
+
+        render() {
+          return (
+            <form onSubmit={this.handleSubmit.bind(this)}>
+              当前:{this.state.sex}<Select onChange={this.sel.bind(this)}/>
+              <input type="submit" value="提交" />
+            </form>
+          )
+        }
+      }
+
+      function App() {
+        return (
+          <div>
+            <h1>练习</h1>
+            <Form />
+          </div>
+        )
+      }
+
+      ReactDOM.render(<App />, document.getElementById('app'))
+    </script>
+  </body>
+</html>
