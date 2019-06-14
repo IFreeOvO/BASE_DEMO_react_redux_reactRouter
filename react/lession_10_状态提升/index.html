@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+  <meta
+    http-equiv="X-UA-Compatible"
+    content="ie=edge"
+  />
+  <title>状态提升</title>
+</head>
+
+<body>
+  <div id="app"></div>
+
+  <script
+    src="https://unpkg.com/react@16/umd/react.development.js"
+    crossorigin
+  ></script>
+  <script
+    src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+    crossorigin
+  ></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <!-- 解决jsx编译问题 -->
+
+  <script type="text/babel">
+    function BoilingVerdict(props) {
+        if (props.celsius >= 100) {
+          return <p>水开了</p>;
+        }
+        return <p>水没开</p>;
+      }
+
+
+      class Calculator extends React.Component {
+        constructor(props) {
+          super(props);
+          this.handleChange = this.handleChange.bind(this);
+          this.state = {temperature: ''};
+        }
+
+        handleChange(e) {
+          this.setState({temperature: e.target.value});
+        }
+
+        render() {
+          const temperature = this.state.temperature;
+          return (
+            <fieldset>
+              <legend>Enter temperature in Celsius:</legend>
+              <input
+                value={temperature}
+                onChange={this.handleChange} />
+
+              <BoilingVerdict
+                celsius={parseFloat(temperature)} />
+
+            </fieldset>
+          );
+        }
+      }
+
+      class BtnA extends React.Component {
+        constructor(props) {
+          super(props);
+        }
+
+        ck() {
+          const {count, onChange} = this.props
+          if(onChange) {
+            onChange(count+1)
+          }
+        }
+
+        render() {
+          const {count} = this.props
+          return (
+            <button onClick={this.ck.bind(this)}>add*{count}</button>
+          )
+        }
+      }
+
+      class BtnB extends React.Component {
+        constructor(props) {
+          super(props);
+        }
+
+        ck() {
+          const {count, onChange} = this.props
+          if(onChange) {
+            onChange(count-1)
+          }
+        }
+
+        render() {
+          const {count} = this.props
+          return (
+            <button onClick={this.ck.bind(this)}>decrease*{count}</button>
+          )
+        }
+      }
+
+      class Calc extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            count: 0
+          }
+        }
+
+        onChange = (value) => {
+          this.setState({
+            count: value
+          })
+        }
+
+        render() {
+          return (
+            <div>
+              <BtnA count={this.state.count} onChange={this.onChange}/>
+              <BtnB count={this.state.count} onChange={this.onChange}/>
+            </div>
+          )
+        }
+      }
+
+    
+      function App() {
+        return (
+          <div>
+            <h1>练习</h1>
+            <Calculator/>
+
+            <Calc/>
+          </div>
+        );
+      }
+
+      ReactDOM.render(<App />, document.getElementById("app"));
+    </script>
+</body>
+
+</html>

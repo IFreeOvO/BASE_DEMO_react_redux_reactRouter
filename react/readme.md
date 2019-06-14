@@ -14,3 +14,5 @@ onClick={() => {this.handleClick('abc')}
                 {this.state.isToggle ? "打开" : "关闭"}
               </button>
 ```
+6.如果遇到多个组件共用状态数据的情况，建议将这些共用状态提升至父组件中
+7.不能在函数组件上使用 ref 属性，因为他们没有实例
