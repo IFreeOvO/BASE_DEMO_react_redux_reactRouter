@@ -1,10 +1,6 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Hello from './components/hello'
-import CustomTextInput from './components/customTextInput'
-import AutoFocusTextInput from './components/AutoFocusTextInput'
-import MyInput from './components/myInput'
 
 function App() {
   return (
@@ -22,12 +18,6 @@ function App() {
         >
           Learn React
         </a>
-        <Hello></Hello>
-
-        <CustomTextInput></CustomTextInput>
-        <AutoFocusTextInput></AutoFocusTextInput>
-        风
-        <MyInput></MyInput>
       </header>
     </div>
   );
