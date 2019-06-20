@@ -1,0 +1,25 @@
+.menu {
+  
+}
+
+.menu li {
+  
+  list-style: none;
+}
+
+.menu a {
+  color: rgb(60, 144, 241);
+  text-decoration: none;
+}
+
+.menuContainer {
+  float: left;
+  width: 100px;
+  background: lightGray;
+}
+
+.main {
+  background: rgb(223, 73, 73);
+  height: 100px;
+  margin-left: 10px;
+}
