@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>改造jquery项目</title>
+  </head>
+
+  <body>
+    <div id="app"></div>
+
+    <script
+      src="https://unpkg.com/react@16/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <!-- 解决jsx编译问题 -->
+
+    <script type="text/babel">
+      // $('#app').html("<button id='btn'>say hi</button>")
+      // $('#btn').click(function () {
+      //     alert('hi')
+      // })
+
+      function Button() {
+        return <button id='btn'>say hi</button>
+      }
+
+      function App() {
+        return (
+          <div>
+            <h1>练习</h1>
+            <Button></Button>
+          </div>
+        )
+      }
+
+      ReactDOM.render(<App />, document.getElementById('app'),function () {
+        $('#btn').click(function () {
+          alert('hi')
+      })
+      })
+    </script>
+  </body>
+</html>
