@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/redux/4.0.1/redux.js"></script>
+  </head>
+  <body>
+    <script>
+      const { createStore } = Redux
+      function couter(state = 0, action) {
+        console.log('接受', action)
+        switch (action.type) {
+          case 'add':
+            return state + 1 + action.msg
+          case 'sub':
+            return state - 1
+          default:
+            return state
+        }
+      }
+
+      var store = createStore(couter)
+
+      // action负责接受dispatch传来的对象
+      store.dispatch({ type: 'add', msg: '哈哈' })
+
+      function addFn() {
+        return {
+          type: 'add',
+          msg: '函数'
+        }
+      }
+      store.dispatch(addFn())
+    </script>
+  </body>
+</html>

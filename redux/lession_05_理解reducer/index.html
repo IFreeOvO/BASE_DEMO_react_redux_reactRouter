@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/redux/4.0.1/redux.js"></script>
+  </head>
+  <body>
+    <h1 id='count'>?</h1>
+    <button id='add'>添加</button>
+    <button id='sub'>减少</button>
+
+    <script>
+      const { createStore } = Redux
+
+      const elCount = document.getElementById('count')
+      const elBtnAdd = document.getElementById('add')
+      const elBtnSub = document.getElementById('sub')
+
+
+
+
+      function couter(state = 0, action) {
+        console.log('接受', action)
+        switch (action.type) {
+          case 'add':
+            return state + 1 
+          case 'sub':
+            return state - 1
+          default:
+            return state
+        }
+      }
+
+      var store = createStore(couter)
+
+      store.subscribe(function() {
+        const count = store.getState()
+        elCount.innerHTML = count
+      })
+
+      const addAction = {type: 'add'}
+      const subAction = {type: 'sub'}
+
+      elBtnAdd.addEventListener('click', function() {
+        store.dispatch(addAction)
+      })
+
+      elBtnSub.addEventListener('click', function() {
+        store.dispatch(subAction)
+      })
+
+
+      // // action负责接受dispatch传来的对象
+      // store.dispatch({ type: 'add', msg: '哈哈' })
+
+      // function addFn() {
+      //   return {
+      //     type: 'add',
+      //     msg: '函数'
+      //   }
+      // }
+      // store.dispatch(addFn())
+
+      // store.subscribe(function() {
+      //   console.log('订阅', store.getState())
+      // })
+
+      // store.dispatch({
+      //   type: 'add'
+      // })
+
+      // var unsubscribe = store.subscribe(function() {
+      //   console.log('新监听', store.getState())
+      // })
+
+      // store.dispatch({
+      //   type: 'add'
+      // })
+
+      // unsubscribe() // 取消监听
+      // store.dispatch({
+      //   type: 'add',
+      //   msg: '取消监听'
+      // })
+    </script>
+  </body>
+</html>
